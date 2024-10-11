@@ -39,7 +39,7 @@ chain = ConversationChain(
     prompt=PROMPT,
     verbose=False,
     memory=ConversationBufferMemory(ai_prefix="Assistant:"),
-    llm=OllamaLLM(model="llama3.2")
+    llm=OllamaLLM(model="llama3.2:1b ")
 )
 
 def record_audio(stop_event, data_queue):
