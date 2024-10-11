@@ -1,1 +1,1 @@
-This folder contains two separate voice assistant models, both from github repositories.
+Refer to project Notion for detailed guides on how to access and use the models within this project. 
