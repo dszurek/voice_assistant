@@ -28,7 +28,7 @@ class TextToSpeechService:
         Synthesizes audio from the given text using the specified voice preset.
         Args:
             text (str): The input text to be synthesized.
-            voice_preset (str, optional): The voice preset to be used for the synthesis. Defaults to "v2/en_speaker_1".
+            voice_preset (str, optional): The voice preset to be used for the synthesis. Defaults to "v2/en_speaker_2".
         Returns:
             tuple: A tuple containing the sample rate and the generated audio array.
         """
@@ -42,7 +42,7 @@ class TextToSpeechService:
         sample_rate = self.model.generation_config.sample_rate
         return sample_rate, audio_array
 
-    def long_form_synthesize(self, text: str, voice_preset: str = "v2/en_speaker_6"):
+    def long_form_synthesize(self, text: str, voice_preset: str = "v2/en_speaker_2"):
         """
         Synthesizes audio from the given long-form text using the specified voice preset.
         Args:
