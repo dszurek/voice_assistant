@@ -1,0 +1,8 @@
+<wws-config>
+	<chunk_size>1280</chunk_size>
+	<model_wakeword>hey jarvis</model_wakeword>
+	<inference_framework>onnx</inference_framework>
+	<channels>1</channels>
+	<rate>16000</rate>
+	<sleep_after_detection_in_seconds>4.0</sleep_after_detection_in_seconds>
+</wws-config>
