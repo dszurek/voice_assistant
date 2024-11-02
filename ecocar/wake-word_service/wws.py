@@ -11,12 +11,12 @@ from openwakeword.model import Model
 import time
 import threading
 import pysine
+from rich.console import Console
 
-
-# Add the parent directory (voice_assistant) to the sys.path
+# # Add the parent directory (voice_assistant) to the sys.path
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..')))
 
-# Import the SpeechToTextService from the speech_service folder
+# # Import the SpeechToTextService from the speech_service folder
 from ecocar.speech_service.stt import SpeechToTextService
 
 # Download pre-trained openwakeword models
@@ -84,7 +84,8 @@ class WakewordListener(threading.Thread):
                     # Play sound to indicate wake word detection
                     self._play_detection_sound()
                     time.sleep(0.1)
-                    stt_service.run()
+                    chat_response = stt_service.run()
+                    logging.info(f"Chatbot Response: {chat_response}")
                     # Sleep for a specified time after detection
                     time.sleep(self._sleep_after_detection_in_seconds)
             else:
