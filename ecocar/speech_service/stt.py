@@ -33,7 +33,7 @@ class SpeechToTextService:
     def record_audio(self, stop_event, data_queue):
         silence_threshold = 500 #adjust based on environment, may need to be higher in car with road noise
         silence_duration = [0]
-        silence_limit = 2 #seconds
+        silence_limit = 4 #seconds
 
         def callback(indata, frames, time, status):
             if status:
@@ -92,8 +92,8 @@ class SpeechToTextService:
             self.console.print(f"Chatbot: {chat_response}")
 
             self.console.print("Synthesizing response...")
-            sample_rate, audio_array = self.tts_service.synthesize(chat_response)
-            self.tts_service.play_audio(sample_rate, audio_array)
+            # sample_rate, audio_array = self.tts_service.synthesize(chat_response)
+            self.tts_service.run(chat_response)
 
         else:
             self.console.print("[red]No audio data received.")
