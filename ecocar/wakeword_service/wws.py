@@ -24,7 +24,6 @@ logging.basicConfig(level=logging.DEBUG, format='%(asctime)-15s %(levelname)s %(
 
 class WakeWordService:
     def __init__(self):
-        self.console = Console()
         self.is_running = False
         self.wwl = WakewordListener()
         self.wwl.daemon = True
@@ -73,6 +72,8 @@ class WakewordListener(threading.Thread):
             self.oww_model = Model(inference_framework=self._inference_framework)  # Load default model
 
         self._n_models = len(self._oww_model.models.keys())  # Number of models loaded
+
+        self.console = Console()
 
 
     def start_stop(self):

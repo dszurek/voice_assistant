@@ -16,6 +16,7 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '.
  # Import the ChatService from the chat_service folder
 from ecocar.chat_service.chat import ChatService
 from ecocar.speech_service.tts import TextToSpeechService
+from ecocar.interaction_service.intService import InteractionService
 
 class SpeechToTextService:
     def __init__(self, rate=16000, chunk_size=1024):
@@ -29,6 +30,7 @@ class SpeechToTextService:
                                       frames_per_buffer=self.chunk_size)
         self.chat_service = ChatService()
         self.tts_service = TextToSpeechService()
+        self.i_service = InteractionService()
         
     def record_audio(self, stop_event, data_queue):
         silence_threshold = 500 #adjust based on environment, may need to be higher in car with road noise
@@ -86,14 +88,22 @@ class SpeechToTextService:
             text = self.transcribe(audio_np)
             self.console.print(f"Transcription: {text}")
 
-            #send to chat service
-            self.console.print("Sending to chatbot...")
-            chat_response = self.chat_service.get_response(text)
-            self.console.print(f"Chatbot: {chat_response}")
+            #determine handling
+            self.console.print("Checking for request...")
+            if self.i_service.is_request(text):
+                self.console.print("Interaction Service Request")
+                response = self.i_service.handle_request(text)
+            else:
+                self.console.print("Chat Service Request")
+                self.console.print("Sending to chatbot...")
+                response = self.chat_service.get_response(text)
+                self.console.print(f"Chatbot: {response}")
+            
+            self.i_service.varState()
 
             self.console.print("Synthesizing response...")
             # sample_rate, audio_array = self.tts_service.synthesize(chat_response)
-            self.tts_service.run(chat_response)
+            self.tts_service.run(response)
 
         else:
             self.console.print("[red]No audio data received.")

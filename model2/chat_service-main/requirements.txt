@@ -1,6 +1,0 @@
-numpy
-flask
-transformers
-accelerate
-chainlit
-openai
