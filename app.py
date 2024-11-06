@@ -1,14 +1,13 @@
 import os.path
 import sys
 import time
-import logging
 from rich.console import Console
 
 # Add the parent directory (ecocar) to the sys.path
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 # Import the WakewordService from the wake_word_service folder
-from ecocar.wakeword_service.wws import WakeWordService
+from wakeword_service.wws import WakeWordService
 # Initialize the rich console
 console = Console()
 

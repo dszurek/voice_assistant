@@ -14,9 +14,9 @@ import sys
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..')))
 
  # Import the ChatService from the chat_service folder
-from ecocar.chat_service.chat import ChatService
-from ecocar.speech_service.tts import TextToSpeechService
-from ecocar.interaction_service.intService import InteractionService
+from chat_service.chat import ChatService
+from speech_service.tts import TextToSpeechService
+from interaction_service.intService import InteractionService
 
 class SpeechToTextService:
     def __init__(self, rate=16000, chunk_size=1024):

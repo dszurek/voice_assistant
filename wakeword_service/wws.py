@@ -14,7 +14,7 @@ from rich.console import Console
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..')))
 
 # # Import the SpeechToTextService from the speech_service folder
-from ecocar.speech_service.stt import SpeechToTextService
+from speech_service.stt import SpeechToTextService
 
 # Download pre-trained openwakeword models
 openwakeword.utils.download_models()

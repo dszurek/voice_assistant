@@ -90,7 +90,7 @@ class InteractionService:
         self.console.print(f"""Headlights: {self.headlights_on}
 Cruise Control: {self.cruise_control_on}
 Music: name: {self.music_request['name']} author: {self.music_request['author']}
-Destination: {self.destination}""", style="frame")
+Destination: {self.destination}""")
 
 
 if __name__ == "__main__":
