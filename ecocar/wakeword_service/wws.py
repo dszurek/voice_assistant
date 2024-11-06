@@ -23,9 +23,10 @@ logging.basicConfig(level=logging.DEBUG, format='%(asctime)-15s %(levelname)s %(
 
 
 class WakeWordService:
-    def __init__(self):
+    def __init__(self, on_listening_callback = None):
         self.is_running = False
-        self.wwl = WakewordListener()
+        self.on_listening_callback = on_listening_callback
+        self.wwl = WakewordListener(on_listening_callback = self.on_listening_callback)
         self.wwl.daemon = True
     
     def start(self):
@@ -45,13 +46,15 @@ class WakewordListener(threading.Thread):
                  inference_framework='onnx',
                  channels=1,
                  rate=16000,
-                 sleep_seconds=2.0
+                 sleep_seconds=2.0,
+                 on_listening_callback = None
                  ):
         super(WakewordListener, self).__init__()
         self._must_listen = False  # Flag to control listening state
         self._chunk_size = chunk_size  # Size of audio chunks to read from the microphone
         self._model_path = model_path  # Path to the wake word model
         self._inference_framework = inference_framework  # Inference framework to use (e.g., 'onnx')
+        self.on_listening_callback = on_listening_callback
 
         # Get microphone stream
         self._format = pyaudio.paInt16  # Audio format
@@ -79,6 +82,8 @@ class WakewordListener(threading.Thread):
     def start_stop(self):
         self._must_listen = not self._must_listen  # Toggle listening state
         logging.info(f"WakewordListener.start_stop(): self._must_listen = {self._must_listen}")
+        if self._must_listen and self.on_listening_callback:
+            self.on_listening_callback()
 
     def run(self):
         stt_service = SpeechToTextService()  # Initialize SpeechToTextService
@@ -104,6 +109,8 @@ class WakewordListener(threading.Thread):
                     logging.info(f"Chatbot Response: {chat_response}")
                     # Sleep for a specified time after detection
                     time.sleep(self._sleep_seconds)
+                    if self.on_listening_callback:
+                        self.on_listening_callback()
             else:
                 time.sleep(0.1)  # Increase sleep time to reduce CPU usage when not listening
 

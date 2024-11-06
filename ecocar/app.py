@@ -12,13 +12,16 @@ from ecocar.wakeword_service.wws import WakeWordService
 # Initialize the rich console
 console = Console()
 
+def on_listening():
+    console.print("[cyan]Listening...[/cyan]")
+
 def main():
     # Initialize the wake word service
-    wakeword_service = WakeWordService()
+    wakeword_service = WakeWordService(on_listening_callback=on_listening)
     
     # Wait for the user to press Enter to start the wake word service
     input("Press Enter to start the wake word service...\n")
-    console.print("[cyan]Listening for wake word...[/cyan]")
+    on_listening()
     wakeword_service.start()
 
     try:

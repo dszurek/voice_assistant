@@ -17,6 +17,7 @@ class InteractionService:
             for keyword in [
                 "play",
                 "set navigation",
+                "set destination",
                 "turn on",
                 "turn off"
             ]
@@ -26,25 +27,35 @@ class InteractionService:
         if "play" in request.lower():
             return self.play_music(request)
         
-        elif "set navigation" in request.lower():
+        elif "set navigation" in request.lower() or "set destination" in request.lower():
             return self.set_navigation(request)
         
-        elif "turn on headlights" in request.lower():
+        elif "headlights" in request.lower():
+            return self.set_headlights(request)
+        
+        elif "cruise control" in request.lower():
+            return self.set_cruise_control(request)
+        
+        else:
+            return "Sorry, I didn't understand that request."
+        
+    def set_headlights(self, request: str):
+        if "turn on" in request.lower():
             self.headlights_on = True
             return "Turning on headlights"
-        
-        elif "turn off headlights" in request.lower():
+        elif "turn off" in request.lower():
             self.headlights_on = False
             return "Turning off headlights"
-        
-        elif "turn on cruise control" in request.lower():
+        else:
+            return "Sorry, I didn't understand that request."        
+
+    def set_cruise_control(self, request: str):
+        if "turn on" in request.lower():
             self.cruise_control_on = True
             return "Turning on cruise control"
-        
-        elif "turn off cruise control" in request.lower():
+        elif "turn off" in request.lower():
             self.cruise_control_on = False
             return "Turning off cruise control"
-        
         else:
             return "Sorry, I didn't understand that request."
 
@@ -76,10 +87,10 @@ class InteractionService:
         return f"Setting navigation to {destination}"
     
     def varState(self):
-        self.console.print(f"Headlights: {self.headlights_on}")
-        self.console.print(f"Cruise Control: {self.cruise_control_on}")
-        self.console.print(f"Music: name: {self.music_request['name']} author: {self.music_request['author']}")
-        self.console.print(f"Destination: {self.destination}")
+        self.console.print(f"""Headlights: {self.headlights_on}
+Cruise Control: {self.cruise_control_on}
+Music: name: {self.music_request['name']} author: {self.music_request['author']}
+Destination: {self.destination}""", style="frame")
 
 
 if __name__ == "__main__":

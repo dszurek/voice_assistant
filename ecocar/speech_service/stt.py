@@ -86,24 +86,25 @@ class SpeechToTextService:
         if audio_np.size > 0:
             self.console.status("Transcribing...", spinner="dots4")
             text = self.transcribe(audio_np)
-            self.console.print(f"Transcription: {text}")
+            self.console.print(f"\nTranscription: {text}\n")
 
             #determine handling
             self.console.print("Checking for request...")
             if self.i_service.is_request(text):
-                self.console.print("Interaction Service Request")
+                self.console.print("\n[green]Interaction Service Request[green]\n")
                 response = self.i_service.handle_request(text)
             else:
                 self.console.print("Chat Service Request")
-                self.console.print("Sending to chatbot...")
+                self.console.print("\n[blue]Sending to chatbot...[blue]\n")
                 response = self.chat_service.get_response(text)
-                self.console.print(f"Chatbot: {response}")
+                self.console.print(f"Chatbot: {response}\n")
             
             self.i_service.varState()
 
-            self.console.print("Synthesizing response...")
-            # sample_rate, audio_array = self.tts_service.synthesize(chat_response)
+            self.console.print("\nSynthesizing response...\n")
             self.tts_service.run(response)
+
+            self.console.print("______________________________\n")
 
         else:
             self.console.print("[red]No audio data received.")
