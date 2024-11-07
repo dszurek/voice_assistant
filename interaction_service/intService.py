@@ -11,6 +11,7 @@ class InteractionService:
         self.destination = "None"
         self.console = Console()
 
+    #checks whether the user's request requires the interaction service
     def is_request(self, request: str) -> bool:
         return any(
             keyword in request.lower()
@@ -23,6 +24,7 @@ class InteractionService:
             ]
         )
 
+    # handles user's request
     def handle_request(self, request: str):
         if "play" in request.lower():
             return self.play_music(request)
@@ -71,7 +73,7 @@ class InteractionService:
 
         self.music_request = {"name": song_name, "author": author}
 
-        # Here: integrate with infotainment
+        # Here: personal solution (API's, custom functions, etc.)
 
         logging.info(f"Playing song: {song_name} by {author}")
         return f"Playing {song_name}"
@@ -81,7 +83,7 @@ class InteractionService:
         destination = request.lower().replace("set navigation to", "").strip()
         self.destination = destination
 
-        # Here: integrate with infotainment
+        # Here: personal solution (API's, custom functions, etc.)
 
         logging.info(f"Setting navigation to: {destination}")
         return f"Setting navigation to {destination}"
